@@ -1,8 +1,19 @@
-# Start here
+# Getting started
 
-Repository: https://github.com/CodeWith-Pranav/ChangeScope
-Live site: https://changescope-psi.vercel.app
+[Live application](https://changescope-psi.vercel.app) · [Repository](https://github.com/CodeWith-Pranav/ChangeScope)
 
-Read README.md. Run `npm ci`, then `npm start`, and open http://localhost:3000. Run `npm test` before committing changes.
+```sh
+npm ci
+npm test
+npm start
+```
 
-GitHub Actions checks pushes and pull requests. The existing Vercel project is connected to this repository for automatic deployments. Git commands are in docs/DEPLOYMENT.md. Beginner explanations, demo script and interview preparation are in docs.
+Open http://localhost:3000. Git is required for the CLI integration test.
+
+- [Usage and source map](README.md)
+- [Code walkthrough](docs/BEGINNER.md)
+- [Example workflow](docs/DEMO.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Algorithm and complexity](docs/ALGORITHM.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [Supported scope](docs/LIMITATIONS.md)

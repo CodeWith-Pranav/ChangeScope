@@ -1,4 +1,4 @@
-# A three-minute demo
+# Example workflow
 
 1. Open the app and describe the problem: finding callers/tests potentially affected by a Python edit.
 2. In Code changes, show `apply_discount`: the example replaces flat subtraction with percentage calculation and input validation.
@@ -12,4 +12,4 @@ Upload `examples/checkout-service` with `examples/change.diff` to reproduce the 
 
 If Python and pytest are installed, you can enter `examples/checkout-service` and run `python -m pytest`. That is separate from ChangeScope's analysis.
 
-Before sending recruiter links, check the demo and GitHub README from a normal browser. Include a change you personally made and understand. Do not claim measured accuracy, test coverage or speedups without a real evaluation dataset.
+The example demonstrates dependency reachability. Coverage, accuracy and speedup claims require a separate evaluation on a defined dataset.

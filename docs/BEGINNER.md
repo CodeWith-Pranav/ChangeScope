@@ -1,33 +1,27 @@
-# A beginner's guide
+# Code walkthrough
 
-A project solves a real problem and gives someone a usable way to interact with the solution. Here the problem is: after editing one Python function, which other functions and tests might depend on it?
+ChangeScope answers a specific question: which callers and tests are statically connected to a changed Python function?
 
-## Frontend, backend and API
+## Browser and API
 
-The frontend runs in your browser. `public/index.html` defines structure, `styles.css` controls appearance, and `client.js` handles uploads, clicks, graph rendering and results.
+`public/index.html` defines the dashboard, `styles.css` provides its layout, and `client.js` handles uploads, graph rendering, source inspection and report export.
 
-The backend runs on the server. `standalone/server.mjs` receives HTTP requests, serves frontend files and passes API requests to `core/http.mjs`. The algorithm is in `core/analyzer.mjs`.
+The browser sends `{name, files, diff}` as JSON to `POST /api/analyze`. Each file has a relative path and source text. The response includes function nodes, call edges, affected nodes, test selectors and diagnostics. The browser renders the computed result without saving project source to browser storage.
 
-An API is a defined way for programs to communicate. The frontend sends filenames, source strings and a diff as JSON to `POST /api/analyze`. The backend returns JSON describing functions, graph edges, affected nodes, tests and warnings. The frontend turns that result into the dashboard.
+## Server and engine
 
-There is no AI model here. A Python syntax parser and graph algorithm compute the result directly. Not every technical project needs AI. There is no database because this version does not keep accounts or project history; export files provide intentional persistence.
+`standalone/server.mjs` serves the frontend and passes API requests to `core/http.mjs`. That handler validates the HTTP boundary and invokes `core/analyzer.mjs`. The current Vercel deployment runs the standalone server in a container; `api/index.mjs` also provides an API adapter.
 
-## Localhost, GitHub and a live site
+`core/diff.mjs` validates unified diff hunks and reconstructs previous source. The analyzer parses both versions, resolves supported calls and builds reverse adjacency. A queue and visited map identify affected callers and attach a shortest witness path. `core/report.mjs` produces Markdown reports for the CLI.
 
-`localhost:3000` means the server is running on your own computer. It works while the terminal process is running. Other people cannot automatically visit it.
+The engine uses deterministic syntax and graph analysis. No model API or database is required. Reports are the explicit persistence mechanism.
 
-GitHub stores source and change history. Recruiters can inspect the README, tests and implementation. It does not automatically run a Node backend. A web host runs that backend and gives visitors a public HTTPS URL. A good portfolio links both source and live demo.
+## Follow one example
 
-## First hour
-
-1. Run the app and inspect `apply_discount` in Code changes.
+1. Run the app and inspect the diff for `apply_discount`.
 2. Follow its path through `calculate_total`, `create_order` and `checkout` to a test.
-3. Open `core/sample.mjs` and confirm those functions exist.
-4. Run `npm test`; read one alias test and the Git integration test.
-5. Find the reverse adjacency map, queue and visited map in `analyze`.
+3. Compare those functions with the source in `core/sample.mjs`.
+4. Read an alias-resolution test and the Git integration test in `tests/`.
+5. Find reverse adjacency, the queue and the visited map in `analyze`.
 
-## Your own contribution
-
-Pick one specific improvement you can explain. Write a failing test, implement the feature, rerun the suite, then commit the change. Record the tradeoff and one limitation you did not solve. State honestly what assistance you used and what you personally changed.
-
-This project demonstrates maps, sets, trees, adjacency lists and BFS. It does not replace practicing DSA questions. Employers can assess your reasoning about the problem, architecture, algorithm, failure cases and tests more meaningfully than a long feature list.
+For complexity and correctness boundaries, see [ALGORITHM.md](ALGORITHM.md) and [LIMITATIONS.md](LIMITATIONS.md).

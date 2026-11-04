@@ -25,7 +25,7 @@ git commit -m "Describe the change"
 git push origin main
 ```
 
-Never commit credentials, node_modules, or private source reports. Original source and deployment migration are separate commits; earlier development history was not fabricated. See [../VERCEL-DEPLOYMENT.md](../VERCEL-DEPLOYMENT.md) for the deployed runtime. Render and Docker below are alternative hosting instructions.
+Never commit credentials, node_modules, or private source reports. See [../VERCEL-DEPLOYMENT.md](../VERCEL-DEPLOYMENT.md) for the deployed runtime. Render and Docker below are alternative hosting instructions.
 
 ## Render
 
@@ -36,9 +36,9 @@ Connect your GitHub repository and create a Blueprint using `render.yaml`, or co
 - Health check: `/api/health`
 - Node 22; HOST=0.0.0.0; TRUST_PROXY=1
 
-The Blueprint requests `plan: free`. Confirm current eligibility and terms in your provider account; the source package does not authorize paid resources. The host assigns the actual public address. Do not invent an address from the service name. Custom domains need a domain you control and DNS configuration.
+The Blueprint requests `plan: free`. Confirm plan eligibility in the provider account. The host assigns the public address. Custom domains require domain ownership and DNS configuration.
 
-The app has no ChatGPT branding, login or runtime dependency. Publishing to another host requires that connected account and a repository/upload route. GitHub Pages alone cannot run the Node backend.
+The standalone app can run on a Node web host. GitHub Pages alone cannot run its backend.
 
 Official configuration reference checked during preparation: https://render.com/docs/blueprint-spec
 
@@ -49,7 +49,7 @@ docker build -t changescope .
 docker run --rm -p 3000:3000 changescope
 ```
 
-Visit http://localhost:3000. The image runs as a non-root user. Docker must be installed; the supplied configuration is not a claim that a container was executed during delivery.
+Visit http://localhost:3000. The image runs as a non-root user. Docker must be installed. The live Vercel deployment uses this container configuration.
 
 ## Environment
 

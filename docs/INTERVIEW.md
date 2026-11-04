@@ -1,10 +1,10 @@
-# Interview preparation
+# Engineering questions
 
-## Project explanation
+## Design summary
 
 “ChangeScope is a Python change-impact analyzer. It reconstructs the previous version from a Git diff, builds call graphs for both versions, and uses reverse BFS to find affected callers and suggest tests with evidence paths. A Node API powers its dashboard and a local Git CLI uses the same engine.”
 
-## Questions to practice
+## Design decisions
 
 | Question | Explain |
 | --- | --- |
@@ -18,12 +18,7 @@
 | Does it guarantee a safe test subset? | No. Dynamic Python and incomplete uploads can hide dependencies. |
 | Why no database? | One-shot analysis needs no saved accounts/history. |
 | How would it scale? | Incremental indexes, source hashes, parent pointers, interval indexing, jobs and rate limits. |
-| What did you contribute? | Name the assistance used and the code/features/tests you personally understood and changed. |
 
-## Resume wording after learning and extending it
+## Further evaluation
 
-“Developed a Python change-impact tool with a Node API and interactive dependency graph; used AST parsing and reverse BFS for explainable test suggestions with regression and integration tests.”
-
-Adapt “developed” to your actual contribution. Do not claim independent authorship, production usage, users or unmeasured performance gains.
-
-Trace one full frontend/API request. Draw a graph and manually perform reverse BFS. Explain deletion handling and a false-negative case. Add one meaningful feature/test and practice explaining a limitation honestly.
+Useful extensions include incremental indexes, interval-based change lookup, parent-pointer evidence storage and a benchmark corpus for supported and unsupported Python patterns. Each extension needs regression cases that establish its behavior and limitations.

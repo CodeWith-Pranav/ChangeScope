@@ -1,21 +1,31 @@
 # GitHub and deployment
 
-## GitHub source repository
+## GitHub source repository and Vercel
 
-Extract the ZIP and enter `ChangeScope`. Run `npm ci` and `npm test`. Create an empty GitHub repository named `changescope`, then replace YOUR_USERNAME below:
+Repository: https://github.com/CodeWith-Pranav/ChangeScope
+Production: https://changescope-psi.vercel.app
+
+The existing Vercel project is connected to this repository. Pushes to main trigger production deployments. Pull requests receive previews, and GitHub Actions runs the tests.
 
 ```sh
-git init
-git add .
-git commit -m "Build ChangeScope impact analyzer"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/changescope.git
-git push -u origin main
+git clone https://github.com/CodeWith-Pranav/ChangeScope.git
+cd ChangeScope
+npm ci
+npm test
+npm start
 ```
 
-Authenticate locally if Git asks. Never put credentials in source. Review `git status` before committing. Upload extracted files, including `.github` and `.gitignore`, not just the ZIP. Do not upload `node_modules` or private reports. The included workflow runs Node tests on pushes and pull requests.
+After editing, review your diff, run the tests and commit your changes:
 
-Suggested description: “Python change-impact analyzer with explainable test selection.” Topics: python, static-analysis, call-graph, developer-tools, nodejs, testing. Add the verified live URL after deployment.
+```sh
+git diff
+npm test
+git add <changed-files>
+git commit -m "Describe the change"
+git push origin main
+```
+
+Never commit credentials, node_modules, or private source reports. Original source and deployment migration are separate commits; earlier development history was not fabricated. See [../VERCEL-DEPLOYMENT.md](../VERCEL-DEPLOYMENT.md) for the deployed runtime. Render and Docker below are alternative hosting instructions.
 
 ## Render
 

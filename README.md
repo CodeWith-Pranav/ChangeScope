@@ -4,9 +4,9 @@
 
 A working Python change-impact analyzer with a browser frontend, Node.js backend, and local Git CLI. It parses source and a unified diff, builds previous/current call graphs, walks reverse dependencies and suggests pytest tests with explanation paths.
 
-[Public demo](https://changescope-pranav.lunarkayak.chatgpt.site)
+[Public demo](https://changescope-psi.vercel.app)
 
-The application itself has no ChatGPT branding or login. The current demo uses the available hosting domain; this standalone source runs independently on any suitable Node host. Deployment to Render and creation of your GitHub repository remain account-dependent steps.
+The application runs on Vercel without a login. Source and commit history are published at https://github.com/CodeWith-Pranav/ChangeScope. The existing Vercel project is connected to this repository; pushes to main trigger production deployments. GitHub Actions runs the test suite on pushes and pull requests.
 
 ## Run locally
 
@@ -72,7 +72,7 @@ Analyzes tracked working-tree files against a local commit. Reports can contain 
 
 ## GitHub and deployment
 
-Upload the **extracted source files**, including `.github` and `.gitignore`, not just this ZIP. Do not upload node_modules. Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for exact Git commands and hosting instructions. GitHub Pages alone cannot run this backend.
+Clone this repository to work with the source and history. Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for Git commands and hosting instructions. GitHub Pages alone cannot run this backend.
 
 Read [docs/BEGINNER.md](docs/BEGINNER.md), then [docs/DEMO.md](docs/DEMO.md) and [docs/INTERVIEW.md](docs/INTERVIEW.md). Understand the code, add a change of your own and describe assistance honestly.
 

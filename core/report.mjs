@@ -1,0 +1,3 @@
+export function markdown(r) {
+  return `# ChangeScope — ${r.project}\n\n${r.summary.changed} changed functions; ${r.summary.affected} affected functions; ${r.summary.tests} suggested tests.\n\n## Focused test command\n\n\`\`\`sh\n${r.command || "python -m pytest"}\n\`\`\`\n\nAlways run the full suite before release: python -m pytest\n\n## Evidence\n\n${r.tests.map((t) => "- " + t.selector + "\n  Path: " + [...t.path].reverse().join(" → ")).join("\n")}\n\n## Diagnostics\n\n${r.diagnostics.map((d) => "- " + d.file + ":" + d.line + " " + d.message).join("\n") || "No diagnostics in the supported scope."}\n\n## Limits\n\n${r.limitations.map((l) => "- " + l).join("\n")}\n`;
+}

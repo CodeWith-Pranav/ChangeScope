@@ -1,0 +1,493 @@
+{
+  "schemaVersion": 1,
+  "project": "checkout-service",
+  "summary": {
+    "files": 6,
+    "functions": 11,
+    "changed": 1,
+    "affected": 9,
+    "tests": 5,
+    "totalTests": 6,
+    "edges": 9,
+    "warnings": 0,
+    "elapsedMs": 28
+  },
+  "changes": [
+    {
+      "oldPath": "shop/pricing.py",
+      "path": "shop/pricing.py",
+      "hunks": [
+        {
+          "oldStart": 1,
+          "oldCount": 5,
+          "newStart": 1,
+          "newCount": 8,
+          "lines": [
+            " def apply_discount(subtotal, percent):",
+            "-    return subtotal - percent",
+            "+    \"\"\"Return the price after a percentage discount.\"\"\"",
+            "+    if percent < 0 or percent > 100:",
+            "+        raise ValueError(\"Invalid discount\")",
+            "+    return round(subtotal * (1 - percent / 100), 2)",
+            " ",
+            " ",
+            " def calculate_total(items, discount=0):"
+          ]
+        }
+      ],
+      "lines": {
+        "old": [
+          2
+        ],
+        "current": [
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "id": "shop/checkout.py::create_order",
+      "file": "shop/checkout.py",
+      "name": "create_order",
+      "qual": "create_order",
+      "start": 4,
+      "end": 6,
+      "isTest": false,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "shop/checkout.py::checkout",
+      "file": "shop/checkout.py",
+      "name": "checkout",
+      "qual": "checkout",
+      "start": 9,
+      "end": 10,
+      "isTest": false,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "shop/catalog.py::available_products",
+      "file": "shop/catalog.py",
+      "name": "available_products",
+      "qual": "available_products",
+      "start": 1,
+      "end": 2,
+      "isTest": false,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "tests/test_pricing.py::test_discount",
+      "file": "tests/test_pricing.py",
+      "name": "test_discount",
+      "qual": "test_discount",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "tests/test_pricing.py::test_total",
+      "file": "tests/test_pricing.py",
+      "name": "test_total",
+      "qual": "test_total",
+      "start": 8,
+      "end": 9,
+      "isTest": true,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "tests/test_pricing.py::test_invalid_discount",
+      "file": "tests/test_pricing.py",
+      "name": "test_invalid_discount",
+      "qual": "test_invalid_discount",
+      "start": 12,
+      "end": 17,
+      "isTest": true,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "tests/test_checkout.py::test_checkout",
+      "file": "tests/test_checkout.py",
+      "name": "test_checkout",
+      "qual": "test_checkout",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "tests/test_checkout.py::test_order",
+      "file": "tests/test_checkout.py",
+      "name": "test_order",
+      "qual": "test_order",
+      "start": 8,
+      "end": 9,
+      "isTest": true,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "tests/test_catalog.py::test_catalog",
+      "file": "tests/test_catalog.py",
+      "name": "test_catalog",
+      "qual": "test_catalog",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "shop/pricing.py::apply_discount",
+      "file": "shop/pricing.py",
+      "name": "apply_discount",
+      "qual": "apply_discount",
+      "start": 1,
+      "end": 5,
+      "isTest": false,
+      "version": "current",
+      "deleted": false
+    },
+    {
+      "id": "shop/pricing.py::calculate_total",
+      "file": "shop/pricing.py",
+      "name": "calculate_total",
+      "qual": "calculate_total",
+      "start": 8,
+      "end": 10,
+      "isTest": false,
+      "version": "current",
+      "deleted": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "shop/checkout.py::create_order",
+      "to": "shop/pricing.py::calculate_total",
+      "line": 5,
+      "version": "current"
+    },
+    {
+      "from": "shop/checkout.py::checkout",
+      "to": "shop/checkout.py::create_order",
+      "line": 10,
+      "version": "current"
+    },
+    {
+      "from": "tests/test_pricing.py::test_discount",
+      "to": "shop/pricing.py::apply_discount",
+      "line": 5,
+      "version": "current"
+    },
+    {
+      "from": "tests/test_pricing.py::test_total",
+      "to": "shop/pricing.py::calculate_total",
+      "line": 9,
+      "version": "current"
+    },
+    {
+      "from": "tests/test_pricing.py::test_invalid_discount",
+      "to": "shop/pricing.py::apply_discount",
+      "line": 14,
+      "version": "current"
+    },
+    {
+      "from": "tests/test_checkout.py::test_checkout",
+      "to": "shop/checkout.py::checkout",
+      "line": 5,
+      "version": "current"
+    },
+    {
+      "from": "tests/test_checkout.py::test_order",
+      "to": "shop/checkout.py::create_order",
+      "line": 9,
+      "version": "current"
+    },
+    {
+      "from": "tests/test_catalog.py::test_catalog",
+      "to": "shop/catalog.py::available_products",
+      "line": 5,
+      "version": "current"
+    },
+    {
+      "from": "shop/pricing.py::calculate_total",
+      "to": "shop/pricing.py::apply_discount",
+      "line": 10,
+      "version": "current"
+    }
+  ],
+  "affected": [
+    {
+      "id": "shop/pricing.py::apply_discount",
+      "file": "shop/pricing.py",
+      "name": "apply_discount",
+      "qual": "apply_discount",
+      "start": 1,
+      "end": 5,
+      "isTest": false,
+      "version": "current",
+      "deleted": false,
+      "direct": true,
+      "path": [
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 0
+    },
+    {
+      "id": "shop/pricing.py::calculate_total",
+      "file": "shop/pricing.py",
+      "name": "calculate_total",
+      "qual": "calculate_total",
+      "start": 8,
+      "end": 10,
+      "isTest": false,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 1
+    },
+    {
+      "id": "tests/test_pricing.py::test_discount",
+      "file": "tests/test_pricing.py",
+      "name": "test_discount",
+      "qual": "test_discount",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "tests/test_pricing.py::test_discount",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 1
+    },
+    {
+      "id": "tests/test_pricing.py::test_invalid_discount",
+      "file": "tests/test_pricing.py",
+      "name": "test_invalid_discount",
+      "qual": "test_invalid_discount",
+      "start": 12,
+      "end": 17,
+      "isTest": true,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "tests/test_pricing.py::test_invalid_discount",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 1
+    },
+    {
+      "id": "shop/checkout.py::create_order",
+      "file": "shop/checkout.py",
+      "name": "create_order",
+      "qual": "create_order",
+      "start": 4,
+      "end": 6,
+      "isTest": false,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "shop/checkout.py::create_order",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 2
+    },
+    {
+      "id": "tests/test_pricing.py::test_total",
+      "file": "tests/test_pricing.py",
+      "name": "test_total",
+      "qual": "test_total",
+      "start": 8,
+      "end": 9,
+      "isTest": true,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "tests/test_pricing.py::test_total",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 2
+    },
+    {
+      "id": "shop/checkout.py::checkout",
+      "file": "shop/checkout.py",
+      "name": "checkout",
+      "qual": "checkout",
+      "start": 9,
+      "end": 10,
+      "isTest": false,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "shop/checkout.py::checkout",
+        "shop/checkout.py::create_order",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 3
+    },
+    {
+      "id": "tests/test_checkout.py::test_order",
+      "file": "tests/test_checkout.py",
+      "name": "test_order",
+      "qual": "test_order",
+      "start": 8,
+      "end": 9,
+      "isTest": true,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "tests/test_checkout.py::test_order",
+        "shop/checkout.py::create_order",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 3
+    },
+    {
+      "id": "tests/test_checkout.py::test_checkout",
+      "file": "tests/test_checkout.py",
+      "name": "test_checkout",
+      "qual": "test_checkout",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "deleted": false,
+      "direct": false,
+      "path": [
+        "tests/test_checkout.py::test_checkout",
+        "shop/checkout.py::checkout",
+        "shop/checkout.py::create_order",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "depth": 4
+    }
+  ],
+  "tests": [
+    {
+      "id": "tests/test_pricing.py::test_discount",
+      "file": "tests/test_pricing.py",
+      "name": "test_discount",
+      "qual": "test_discount",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "path": [
+        "tests/test_pricing.py::test_discount",
+        "shop/pricing.py::apply_discount"
+      ],
+      "selector": "tests/test_pricing.py::test_discount"
+    },
+    {
+      "id": "tests/test_pricing.py::test_total",
+      "file": "tests/test_pricing.py",
+      "name": "test_total",
+      "qual": "test_total",
+      "start": 8,
+      "end": 9,
+      "isTest": true,
+      "version": "current",
+      "path": [
+        "tests/test_pricing.py::test_total",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "selector": "tests/test_pricing.py::test_total"
+    },
+    {
+      "id": "tests/test_pricing.py::test_invalid_discount",
+      "file": "tests/test_pricing.py",
+      "name": "test_invalid_discount",
+      "qual": "test_invalid_discount",
+      "start": 12,
+      "end": 17,
+      "isTest": true,
+      "version": "current",
+      "path": [
+        "tests/test_pricing.py::test_invalid_discount",
+        "shop/pricing.py::apply_discount"
+      ],
+      "selector": "tests/test_pricing.py::test_invalid_discount"
+    },
+    {
+      "id": "tests/test_checkout.py::test_checkout",
+      "file": "tests/test_checkout.py",
+      "name": "test_checkout",
+      "qual": "test_checkout",
+      "start": 4,
+      "end": 5,
+      "isTest": true,
+      "version": "current",
+      "path": [
+        "tests/test_checkout.py::test_checkout",
+        "shop/checkout.py::checkout",
+        "shop/checkout.py::create_order",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "selector": "tests/test_checkout.py::test_checkout"
+    },
+    {
+      "id": "tests/test_checkout.py::test_order",
+      "file": "tests/test_checkout.py",
+      "name": "test_order",
+      "qual": "test_order",
+      "start": 8,
+      "end": 9,
+      "isTest": true,
+      "version": "current",
+      "path": [
+        "tests/test_checkout.py::test_order",
+        "shop/checkout.py::create_order",
+        "shop/pricing.py::calculate_total",
+        "shop/pricing.py::apply_discount"
+      ],
+      "selector": "tests/test_checkout.py::test_order"
+    }
+  ],
+  "allTests": [
+    "tests/test_pricing.py",
+    "tests/test_checkout.py",
+    "tests/test_catalog.py"
+  ],
+  "command": "python -m pytest 'tests/test_pricing.py::test_discount' 'tests/test_pricing.py::test_total' 'tests/test_pricing.py::test_invalid_discount' 'tests/test_checkout.py::test_checkout' 'tests/test_checkout.py::test_order'",
+  "conservative": false,
+  "conservativeCommand": "python -m pytest 'tests/test_pricing.py' 'tests/test_checkout.py' 'tests/test_catalog.py'",
+  "diagnostics": [],
+  "diagnosticsTruncated": false,
+  "moduleChanges": [],
+  "limitations": [
+    "Static suggestions are not proof that other tests can be skipped.",
+    "Supports explicit Python imports, direct function calls and same-class self/cls calls.",
+    "Fixtures, runtime dispatch, monkey-patching, inheritance and decorators can hide dependencies.",
+    "Only the uploaded files are analyzed; source is never executed."
+  ]
+}

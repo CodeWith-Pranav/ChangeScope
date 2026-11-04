@@ -1,0 +1,30 @@
+{
+  "name": "checkout-service",
+  "files": [
+    {
+      "path": "shop/pricing.py",
+      "content": "def apply_discount(subtotal, percent):\n    \"\"\"Return the price after a percentage discount.\"\"\"\n    if percent < 0 or percent > 100:\n        raise ValueError(\"Invalid discount\")\n    return round(subtotal * (1 - percent / 100), 2)\n\n\ndef calculate_total(items, discount=0):\n    subtotal = sum(items)\n    return apply_discount(subtotal, discount)\n"
+    },
+    {
+      "path": "shop/checkout.py",
+      "content": "from shop.pricing import calculate_total\n\n\ndef create_order(items, discount=0):\n    total = calculate_total(items, discount)\n    return {\"total\": total, \"status\": \"created\"}\n\n\ndef checkout(items, discount=0):\n    return create_order(items, discount)\n"
+    },
+    {
+      "path": "shop/catalog.py",
+      "content": "def available_products():\n    return [\"Notebook\", \"Pencil\", \"Backpack\"]\n"
+    },
+    {
+      "path": "tests/test_pricing.py",
+      "content": "from shop.pricing import apply_discount, calculate_total\n\n\ndef test_discount():\n    assert apply_discount(100, 10) == 90\n\n\ndef test_total():\n    assert calculate_total([50, 50], 10) == 90\n\n\ndef test_invalid_discount():\n    try:\n        apply_discount(100, 120)\n    except ValueError:\n        return\n    assert False\n"
+    },
+    {
+      "path": "tests/test_checkout.py",
+      "content": "from shop.checkout import checkout, create_order\n\n\ndef test_checkout():\n    assert checkout([100], 10)[\"total\"] == 90\n\n\ndef test_order():\n    assert create_order([25, 25])[\"status\"] == \"created\"\n"
+    },
+    {
+      "path": "tests/test_catalog.py",
+      "content": "from shop.catalog import available_products\n\n\ndef test_catalog():\n    assert \"Notebook\" in available_products()\n"
+    }
+  ],
+  "diff": "diff --git a/shop/pricing.py b/shop/pricing.py\n--- a/shop/pricing.py\n+++ b/shop/pricing.py\n@@ -1,5 +1,8 @@\n def apply_discount(subtotal, percent):\n-    return subtotal - percent\n+    \"\"\"Return the price after a percentage discount.\"\"\"\n+    if percent < 0 or percent > 100:\n+        raise ValueError(\"Invalid discount\")\n+    return round(subtotal * (1 - percent / 100), 2)\n \n \n def calculate_total(items, discount=0):\n"
+}

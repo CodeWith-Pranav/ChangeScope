@@ -1,0 +1,13 @@
+diff --git a/shop/pricing.py b/shop/pricing.py
+--- a/shop/pricing.py
++++ b/shop/pricing.py
+@@ -1,5 +1,8 @@
+ def apply_discount(subtotal, percent):
+-    return subtotal - percent
++    """Return the price after a percentage discount."""
++    if percent < 0 or percent > 100:
++        raise ValueError("Invalid discount")
++    return round(subtotal * (1 - percent / 100), 2)
+ 
+ 
+ def calculate_total(items, discount=0):

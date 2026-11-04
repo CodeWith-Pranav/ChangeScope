@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Understand the impact of a Python code change. Trace affected functions and choose tests with evidence."
+    />
+    <title>ChangeScope — Know what your change touches</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/client.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a href="/" class="brand"
+        ><span class="logo">⌘</span>ChangeScope<span class="brand-dot"
+          >.</span
+        ></a
+      >
+      <div class="workspace">
+        <span class="workspace-icon">⌂</span>
+        <div>Personal workspace<small>PYTHON ANALYSIS</small></div>
+        <span class="workspace-caret">⌄</span>
+      </div>
+      <div class="nav-label">WORKSPACE</div>
+      <nav>
+        <button class="nav active" data-view="overview">
+          <span>◈</span>Overview</button
+        ><button class="nav" data-view="graph">
+          <span>⌘</span>Impact graph<span class="nav-badge" id="graph-count"
+            >—</span
+          ></button
+        ><button class="nav" data-view="changes">
+          <span>±</span>Code changes</button
+        ><button class="nav" data-view="tests"><span>✓</span>Test plan</button
+        ><button class="nav" data-view="diagnostics">
+          <span>◉</span>Diagnostics<span class="nav-badge" id="warning-count"
+            >—</span
+          >
+        </button>
+      </nav>
+      <div class="nav-label second-label">RESOURCES</div>
+      <button class="nav" data-action="guide"><span>▤</span>How it works</button
+      ><button class="nav" data-action="sample">
+        <span>▷</span>Try example project
+      </button>
+      <div class="sidebar-bottom">
+        <div class="privacy-mark">◇</div>
+        <strong>Your code stays yours.</strong>
+        <p>Analyzed in memory.<br />No source code saved on the server.</p>
+        <button class="link-button" data-action="guide">
+          About the analyzer ↗
+        </button>
+      </div>
+      <div class="profile">
+        <span class="avatar">P</span>
+        <div>Personal workspace<small>No account required</small></div>
+        <span class="online-dot"></span>
+      </div>
+    </aside>
+    <div class="shell">
+      <header>
+        <div class="breadcrumb">
+          Workspace <span>/</span> <strong id="breadcrumb">Overview</strong>
+        </div>
+        <div class="header-right">
+          <span class="engine-state"><i></i> Static analysis engine</span
+          ><button class="small-button" data-action="guide">
+            ? <span>Help</span>
+          </button>
+        </div>
+      </header>
+      <main>
+        <div class="page-title">
+          <div>
+            <div class="eyebrow">LESS GUESSWORK. MORE CONFIDENCE.</div>
+            <h1>Know what your change <span>touches.</span></h1>
+            <p>
+              Follow the ripple. Find the right tests. Ship with a clearer
+              picture.
+            </p>
+          </div>
+          <button class="primary" data-action="upload">
+            <span>＋</span> New analysis
+          </button>
+        </div>
+        <div id="error-banner" class="error-banner hidden" role="alert"></div>
+        <section class="project-bar">
+          <div class="repo-icon">⌘</div>
+          <div class="project-name">
+            <strong id="project-name">Preparing example project…</strong>
+            <div>
+              <span class="language-dot"></span> Python
+              <span class="separator">·</span
+              ><span id="project-files">— files</span
+              ><span class="separator">·</span
+              ><span id="sample-label">Example project</span>
+            </div>
+          </div>
+          <div class="diff-pill"><span>⑂</span> working changes</div>
+          <button class="secondary" data-action="upload">
+            Change source ↗</button
+          ><button
+            class="icon-button"
+            data-action="refresh"
+            aria-label="Run analysis again"
+          >
+            ↻
+          </button>
+        </section>
+        <div id="content" aria-live="polite">
+          <div class="loading">
+            <div class="spinner"></div>
+            <h2>Connecting the dots…</h2>
+            <p>Parsing Python and tracing dependencies.</p>
+          </div>
+        </div>
+        <footer>
+          <span><i class="online-dot"></i> Source is never executed</span
+          ><span
+            >ChangeScope <b>v1.0</b> <span class="footer-divider">/</span> Built
+            for thoughtful changes.</span
+          ><button class="link-button" data-action="guide">
+            Scope & limitations ↗
+          </button>
+        </footer>
+      </main>
+    </div>
+    <dialog id="upload-dialog">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">START WITH A CHANGE</span>
+          <h2>See the bigger picture.</h2>
+        </div>
+        <button class="icon-button" data-close aria-label="Close upload">
+          ✕
+        </button>
+      </div>
+      <p class="dialog-subtitle">
+        Choose your Python project after the change, then add its unified Git
+        diff.
+      </p>
+      <div class="steps">
+        <span class="active">1 <b>Source files</b></span
+        ><i></i><span>2 <b>Git diff</b></span
+        ><i></i><span>3 <b>Analyze</b></span>
+      </div>
+      <label class="field-label" for="analysis-name">Project name</label
+      ><input id="analysis-name" value="my-python-project" maxlength="100" />
+      <div id="dropzone" class="dropzone">
+        <span>↥</span><strong>Bring your Python project</strong>
+        <p>Choose a folder or select .py files. Up to 80 files / 600 KB.</p>
+        <div class="button-row">
+          <button class="secondary" id="folder-button">Choose folder</button
+          ><button class="secondary" id="files-button">Choose files</button>
+        </div>
+        <input
+          type="file"
+          id="folder-input"
+          webkitdirectory
+          multiple
+          hidden
+        /><input type="file" id="files-input" accept=".py" multiple hidden />
+      </div>
+      <div id="upload-status" class="upload-status">No files selected</div>
+      <label class="field-label" for="diff-input"
+        >Unified Git diff
+        <button class="link-button" id="patch-button" type="button">
+          Upload .diff / .patch ↗
+        </button></label
+      ><textarea
+        id="diff-input"
+        rows="7"
+        spellcheck="false"
+        placeholder="Paste the output of git diff --no-ext-diff --unified=3 HEAD -- '*.py'"
+      ></textarea
+      ><input type="file" id="patch-input" accept=".diff,.patch,.txt" hidden />
+      <div class="notice">
+        <span>ⓘ</span> Paths must match the repository root. Code is sent to
+        this server for in-memory analysis; use the standalone app for private
+        local analysis.
+      </div>
+      <div id="upload-error" role="alert" class="error-text"></div>
+      <div class="dialog-footer">
+        <button class="link-button" data-action="sample">
+          Use example instead</button
+        ><button id="analyze-button" class="primary">
+          Analyze change <span>→</span>
+        </button>
+      </div>
+    </dialog>
+    <dialog id="guide-dialog">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">A CLEARER VIEW OF YOUR CODE</span>
+          <h2>Evidence, before you ship.</h2>
+        </div>
+        <button class="icon-button" data-close aria-label="Close help">
+          ✕
+        </button>
+      </div>
+      <div class="guide-body">
+        <h3>01 / Bring the current source and diff</h3>
+        <p>
+          Upload the project folder AFTER your edits and a unified diff from the
+          same repository root. The analyzer validates patch context and
+          reconstructs the previous source.
+        </p>
+        <h3>02 / Trace both versions</h3>
+        <p>
+          A Python syntax parser identifies functions, imports and direct calls.
+          We combine the previous and current dependency graphs, including
+          removed functions, and walk backwards from changes to callers and
+          tests.
+        </p>
+        <h3>03 / Inspect the evidence</h3>
+        <p>
+          Every recommended test has an explanation path. Module-level changes
+          trigger broader analysis. Unresolved calls and syntax recovery are
+          reported in Diagnostics.
+        </p>
+        <div class="notice">
+          Static analysis cannot prove that unselected tests are safe to skip.
+          Python fixtures, decorators, inheritance, runtime imports and dynamic
+          dispatch can hide dependencies. Run the complete suite before release.
+        </div>
+        <h3>Supported scope</h3>
+        <p>
+          Python source; explicit imports and aliases; direct function calls;
+          same-class self/cls calls; nested functions; standard pytest-style
+          test functions and methods. No code is executed and no remote
+          repository is fetched.
+        </p>
+        <h3>Privacy & limits</h3>
+        <p>
+          No project source is written to a database, log or browser storage by
+          this application. Requests are processed by the hosting provider.
+          Maximum: 80 .py files, 600 KB source, 1,200 functions. Exported
+          reports may include code; keep them private when needed.
+        </p>
+      </div>
+    </dialog>
+    <dialog id="source-dialog">
+      <div class="dialog-header">
+        <h2 id="source-title">Source</h2>
+        <button class="icon-button" data-close aria-label="Close source">
+          ✕
+        </button>
+      </div>
+      <pre id="source-code" class="source-code"></pre>
+    </dialog>
+    <dialog id="report-dialog">
+      <div class="dialog-header">
+        <div><span class="eyebrow">TAKE THE EVIDENCE WITH YOU</span><h2>Analysis report</h2></div>
+        <button class="icon-button" data-close aria-label="Close report">✕</button>
+      </div>
+      <p class="dialog-subtitle">Preview your Markdown report, then copy or save it.</p>
+      <textarea id="report-text" readonly rows="16" aria-label="Markdown report" spellcheck="false"></textarea>
+      <div class="dialog-footer">
+        <button class="secondary" data-action="copy-report">Copy report</button>
+        <button class="primary" data-action="download-md">Download .md ↓</button>
+      </div>
+    </dialog>
+    <div class="toast hidden" id="toast" role="status"></div>
+  </body>
+</html>

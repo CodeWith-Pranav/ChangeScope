@@ -6,7 +6,15 @@ A working Python change-impact analyzer with a browser frontend, Node.js backend
 
 [Public demo](https://changescope-psi.vercel.app)
 
-The application runs on Vercel without a login. Source and commit history are published at https://github.com/CodeWith-Pranav/ChangeScope. The existing Vercel project is connected to this repository; pushes to main trigger production deployments. GitHub Actions runs the test suite on pushes and pull requests.
+The dashboard runs on Vercel. A local CLI uses the same analysis engine for repositories on disk. [Architecture](docs/ARCHITECTURE.md) · [Algorithm](docs/ALGORITHM.md) · [Supported scope](docs/LIMITATIONS.md)
+
+## How it works
+
+1. Validate the current Python source against the supplied diff.
+2. Reconstruct the previous source and parse both snapshots.
+3. Combine their call graphs to retain deleted dependencies.
+4. Run reverse breadth-first search from changed functions.
+5. Show affected callers and suggested tests with witness paths.
 
 ## Run locally
 
@@ -68,13 +76,13 @@ Analyzes tracked working-tree files against a local commit. Reports can contain 
 | core | Parser, diff handling, call graph, BFS and API |
 | tests | Engine, HTTP and Git checks |
 | examples | Uploadable example project, diff and reports |
-| docs | Beginner, architecture, algorithm, API, deployment and interview guides |
+| docs | Architecture, algorithm, API, deployment and walkthroughs |
 
 ## GitHub and deployment
 
 Clone this repository to work with the source and history. Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for Git commands and hosting instructions. GitHub Pages alone cannot run this backend.
 
-Read [docs/BEGINNER.md](docs/BEGINNER.md), then [docs/DEMO.md](docs/DEMO.md) and [docs/INTERVIEW.md](docs/INTERVIEW.md). Understand the code, add a change of your own and describe assistance honestly.
+See the [code walkthrough](docs/BEGINNER.md), [example workflow](docs/DEMO.md), and [engineering questions](docs/INTERVIEW.md) for implementation details and design tradeoffs.
 
 The app holds source in memory, without application database/log/browser-storage persistence. Hosted requests still cross the network; use local hosting for private code. See [limitations](docs/LIMITATIONS.md) and [validation](docs/VALIDATION.md).
 
